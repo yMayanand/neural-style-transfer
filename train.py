@@ -93,11 +93,11 @@ def main(args):
         optimizer.zero_grad()
 
         if (step % args.log_interval) == 0:
-            print(f"step: {step}, \
-            variation_loss: {t_l.item()}, \
-            style_loss: {s_l.item():,}, \
-            content_loss: {c_l.item():,}, \
-            total_loss: {loss.item():,}")
+            print(f"step: {step:04}, \
+            variation_loss: {t_l.item():12.4f}, \
+            style_loss: {s_l.item():12.4f}, \
+            content_loss: {c_l.item():12.4f}, \
+            total_loss: {loss.item():12.4f}")
     
     # saving image
     os.makedirs('./outputs', exist_ok=True)
