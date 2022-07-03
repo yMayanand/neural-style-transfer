@@ -1,6 +1,5 @@
 import os
 import argparse
-from tqdm import tqdm
 from utils import load_image, preprocess_image, save_image
 from model import VGG16
 from loss import ContentLoss, StyleLoss, TotalVariationLoss
@@ -70,7 +69,7 @@ def main(args):
     style_loss = StyleLoss(style_weight=args.style_weight, reduction='sum')
     tv_loss = TotalVariationLoss(tv_weight=args.tv_weight)
 
-    for step in tqdm(range(1, args.steps + 1)):
+    for step in range(1, args.steps + 1):
         vgg.eval()
         image_style_features = vgg(opt_image)
         image_content_features = image_style_features.relu2_2
