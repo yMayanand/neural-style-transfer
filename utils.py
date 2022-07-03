@@ -2,8 +2,8 @@ import cv2
 import numpy as np
 from torchvision import transforms
 
-IMAGENET_MEAN = [0.485, 0.456, 0.406]
-IMAGENET_STD = [0.229, 0.224, 0.225]
+IMAGENET_MEAN = np.array([0.485, 0.456, 0.406])
+IMAGENET_STD = np.array([0.229, 0.224, 0.225])
 
 def gram_matrix(x):
     """computes gram matrix of feature map shape (b, ch, h, w)"""
@@ -26,7 +26,8 @@ def load_image(img_path, shape=None):
 def preprocess_image(image):
     """preprocesses image and prepares it to be fed to the model"""
     transform = transforms.Compose([
-        transforms.ToTensor()
+        transforms.ToTensor(),
+        transforms.Normalize(IMAGENET_MEAN, IMAGENET_STD)
     ])
     img = transform(image)
     img = img.unsqueeze(0)
@@ -44,6 +45,7 @@ def postprocess_image(image):
     image = image.squeeze(0)
     image = image.cpu().detach().clone().clamp(0, 1).numpy()
     image = image.transpose(1, 2, 0)
+    image = (image * IMAGENET_STD) + IMAGENET_MEAN
     return image
 
 
