@@ -8,24 +8,29 @@ import torch
 import torch.optim as optim
 
 parser = argparse.ArgumentParser('arguments for training')
+
 parser.add_argument('--data_dir', type=str, help='path to image directory')
 parser.add_argument('--style_image', type=str, help='path to style image')
 parser.add_argument('--content_image', type=str, help='path to content image')
+
 parser.add_argument('--lr', type=float, default=1e-3, help='learning rate')
 parser.add_argument('--steps', type=int, default=50,
                     help='number of optimization steps')
+parser.add_argument('--log_interval', type=int,
+                    default=10, help='logging interval')
+
+
 parser.add_argument('--style_size', type=int,
                     default=256, help='style image size')
 parser.add_argument('--content_size', type=int,
                     default=256, help='content image size')
+
 parser.add_argument('--content_weight', type=float,
                     default=1e5, help='content weight for loss')
 parser.add_argument('--style_weight', type=float,
                     default=1e10, help='style weight for loss')
 parser.add_argument('--tv_weight', type=float,
                     default=1., help='total variation weight for loss')
-parser.add_argument('--log_interval', type=int,
-                    default=10, help='logging interval')
 
 
 def main(args):
