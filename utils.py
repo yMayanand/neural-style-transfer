@@ -5,6 +5,9 @@ from torchvision import transforms
 IMAGENET_MEAN = np.array([0.485, 0.456, 0.406])
 IMAGENET_STD = np.array([0.229, 0.224, 0.225])
 
+IMAGENET_MEAN_255 = np.array([123.675, 116.28, 103.53])
+IMAGENET_STD_NEUTRAL = np.array([1, 1, 1])
+
 def gram_matrix(x):
     """computes gram matrix of feature map shape (b, ch, h, w)"""
     b, ch, h, w = x.shape
@@ -27,7 +30,8 @@ def preprocess_image(image):
     """preprocesses image and prepares it to be fed to the model"""
     transform = transforms.Compose([
         transforms.ToTensor(),
-        transforms.Normalize(IMAGENET_MEAN, IMAGENET_STD)
+        transforms.Lambda(lambda x: x.mul(255)),
+        transforms.Normalize(IMAGENET_MEAN_255, IMAGENET_STD_NEUTRAL)
     ])
     img = transform(image)
     img = img.unsqueeze(0)
@@ -36,7 +40,6 @@ def preprocess_image(image):
 def save_image(filename, data):
     """saves image after training"""
     img = postprocess_image(data)
-    img = img * 255
     img = img.astype("uint8")
     cv2.imwrite(filename, img[:, :, ::-1]) # converts rgb to bgr due to opencv constraint
 
@@ -45,8 +48,8 @@ def postprocess_image(image):
     image = image.squeeze(0)
     image = image.cpu().detach().clone().numpy()
     image = image.transpose(1, 2, 0)
-    image = (image * IMAGENET_STD) + IMAGENET_MEAN
-    image = image.clip(0, 1)
+    image = (image * IMAGENET_STD_NEUTRAL) + IMAGENET_MEAN_255
+    image = image.clip(0, 255)
     return image
 
 
