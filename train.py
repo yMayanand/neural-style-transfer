@@ -3,7 +3,7 @@ import argparse
 from tqdm import tqdm
 from utils import load_image, preprocess_image, save_image
 from model import VGG16
-from loss import ContentLoss, StyleLoss
+from loss import ContentLoss, StyleLoss, TotalVariationLoss
 
 import torch
 import torch.optim as optim
@@ -66,6 +66,7 @@ def main(args):
 
     content_loss = ContentLoss(content_weight=args.content_weight)
     style_loss = StyleLoss(style_weight=args.style_weight, reduction='sum')
+    tv_loss = TotalVariationLoss()
 
     for step in tqdm(range(1, args.steps + 1)):
         vgg.eval()
@@ -74,13 +75,16 @@ def main(args):
 
         s_l = 0
         c_l = 0
+        t_l = 0
 
         for y, x in zip(target_style_features, image_style_features):
             s_l += style_loss(y, x)
 
         c_l = content_loss(target_content_features, image_content_features)
 
-        loss = c_l + s_l
+        t_l = tv_loss(opt_image)
+
+        loss = c_l + s_l + t_l
 
         loss.backward()
         optimizer.step()
@@ -88,6 +92,7 @@ def main(args):
 
         if (step % args.log_interval) == 0:
             print(f"step: {step}, \
+            variation_loss: {t_l.item()}, \
             style_loss: {s_l.item():,}, \
             content_loss: {c_l.item():,}, \
             total_loss: {loss.item():,}")
