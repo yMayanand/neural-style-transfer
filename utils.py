@@ -32,4 +32,22 @@ def preprocess_image(image):
     img = img.unsqueeze(0)
     return img
 
+def save_image(filename, data):
+    """saves image after training"""
+    img = postprocess_image(data)
+    img = img * 255
+    img = img.astype("uint8")
+    cv2.imwrite(filename, img)
+
+def postprocess_image(image):
+    """postprocesses images after training"""
+    image = image.unsqueeze(0)
+    image = image.cpu().detach().clone().clamp(0, 1).numpy()
+    image = image.transpose(1, 2, 0)
+    return image
+
+
+
+    
+
 

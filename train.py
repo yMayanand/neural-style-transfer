@@ -1,7 +1,7 @@
 import os
 import argparse
 from tqdm.notebook import tqdm
-from utils import load_image, preprocess_image
+from utils import load_image, preprocess_image, save_image
 from model import VGG16
 from loss import ContentLoss, StyleLoss
 
@@ -57,7 +57,9 @@ def main(args):
     # model
     vgg = VGG16(requires_grad=False)
 
+    vgg.eval()
     target_style_features = vgg(style_tensor)
+    vgg.eval()
     target_content_features = vgg(content_tensor).relu2_2
 
     # loss functions
@@ -66,6 +68,7 @@ def main(args):
     style_loss = StyleLoss(style_weight=args.style_weight)
 
     for step in tqdm(range(1, args.steps + 1)):
+        vgg.eval()
         image_style_features = vgg(opt_image)
         image_content_features = image_style_features.relu2_2
 
@@ -88,6 +91,10 @@ def main(args):
             style_loss: {s_l.item():,}, \
             content_loss: {c_l.item():,}, \
             total_loss: {loss.item():,}")
+    
+    # saving image
+    os.makedirs('./outputs', exist_ok=True)
+    save_image('./outputs/img.jpg', opt_image)
 
 args = parser.parse_args()
 
