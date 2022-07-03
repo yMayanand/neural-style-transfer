@@ -1,6 +1,6 @@
 import os
 import argparse
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 from utils import load_image, preprocess_image, save_image
 from model import VGG16
 from loss import ContentLoss, StyleLoss
