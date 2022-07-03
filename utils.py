@@ -43,9 +43,10 @@ def save_image(filename, data):
 def postprocess_image(image):
     """postprocesses images after training"""
     image = image.squeeze(0)
-    image = image.cpu().detach().clone().clamp(0, 1).numpy()
+    image = image.cpu().detach().clone().numpy()
     image = image.transpose(1, 2, 0)
     image = (image * IMAGENET_STD) + IMAGENET_MEAN
+    image = image.clip(0, 1)
     return image
 
 
