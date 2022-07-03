@@ -44,18 +44,18 @@ def main(args):
     )
 
     # preprocess image
-    style_tensor = preprocess_image(style_image)
-    content_tensor = preprocess_image(content_image)
+    style_tensor = preprocess_image(style_image).to(device)
+    content_tensor = preprocess_image(content_image).to(device)
 
     # initialising image that will be optimized
-    opt_image = content_tensor.clone()
+    opt_image = content_tensor.clone().to(device)
     opt_image.requires_grad = True
 
     # optimizer
     optimizer = optim.Adam([opt_image], lr=args.lr)
 
     # model
-    vgg = VGG16(requires_grad=False)
+    vgg = VGG16(requires_grad=False).to(device)
 
     vgg.eval()
     target_style_features = vgg(style_tensor)
