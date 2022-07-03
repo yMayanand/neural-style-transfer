@@ -12,6 +12,7 @@ parser = argparse.ArgumentParser('arguments for training')
 parser.add_argument('--data_dir', type=str, help='path to image directory')
 parser.add_argument('--style_image', type=str, help='path to style image')
 parser.add_argument('--content_image', type=str, help='path to content image')
+parser.add_argument('--output_image', type=str, help='path to save resulted image')
 
 parser.add_argument('--lr', type=float, default=1e-3, help='learning rate')
 parser.add_argument('--steps', type=int, default=50,
@@ -105,7 +106,7 @@ def main(args):
     
     # saving image
     os.makedirs('./outputs', exist_ok=True)
-    save_image('./outputs/img.jpg', opt_image)
+    save_image(f'./outputs/{args.output_image}', opt_image)
 
 args = parser.parse_args()
 
