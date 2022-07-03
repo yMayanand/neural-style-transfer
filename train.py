@@ -65,7 +65,7 @@ def main(args):
     # loss functions
 
     content_loss = ContentLoss(content_weight=args.content_weight)
-    style_loss = StyleLoss(style_weight=args.style_weight)
+    style_loss = StyleLoss(style_weight=args.style_weight, reduction='sum')
 
     for step in tqdm(range(1, args.steps + 1)):
         vgg.eval()
