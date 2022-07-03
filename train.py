@@ -23,6 +23,8 @@ parser.add_argument('--content_weight', type=float,
                     default=1e5, help='content weight for loss')
 parser.add_argument('--style_weight', type=float,
                     default=1e10, help='style weight for loss')
+parser.add_argument('--tv_weight', type=float,
+                    default=1., help='total variation weight for loss')
 parser.add_argument('--log_interval', type=int,
                     default=10, help='logging interval')
 
@@ -66,7 +68,7 @@ def main(args):
 
     content_loss = ContentLoss(content_weight=args.content_weight)
     style_loss = StyleLoss(style_weight=args.style_weight, reduction='sum')
-    tv_loss = TotalVariationLoss()
+    tv_loss = TotalVariationLoss(tv_weight=args.tv_weight)
 
     for step in tqdm(range(1, args.steps + 1)):
         vgg.eval()
