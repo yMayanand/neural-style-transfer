@@ -5,11 +5,11 @@ from utils import gram_matrix
 class ContentLoss(nn.Module):
     """computes content loss for neural style transfer task"""
     
-    def __init__(self, content_weight=1e5):
+    def __init__(self, content_weight=1e5, reduction='mean'):
         super().__init__()
 
         self.content_weight = content_weight
-        self.aux_loss = nn.MSELoss()
+        self.aux_loss = nn.MSELoss(reduction=reduction)
 
     def forward(self, y, y_target):
         loss = self.aux_loss(y, y_target) * self.content_weight
@@ -18,11 +18,11 @@ class ContentLoss(nn.Module):
 class StyleLoss(nn.Module):
     """computes style loss for neural style transfer task"""
 
-    def __init__(self, style_weight=1e3):
+    def __init__(self, style_weight=1e3, reduction='mean'):
         super().__init__()
 
         self.style_weight = style_weight
-        self.aux_loss = nn.MSELoss()
+        self.aux_loss = nn.MSELoss(reduction=reduction)
 
     def forward(self, y, y_target):
         gram_y = gram_matrix(y)
