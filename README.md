@@ -32,6 +32,7 @@ This repository contains a pytorch implementation of an algorithm for artistic s
 </p>
 
 <p align="center">
+
     <img src="data/vg_wheat_field.jpg" width="250px" height="250px">
     <img src="data/golden_gate.jpg" width="250px" height="250px">
     <img src="outputs/gate_wheat.jpg" width="440px" height="440px">
@@ -49,3 +50,5 @@ python neural-style-transfer/train.py  --data_dir <path/to/directory> --content_
 * `--content_image`: name content image you want to stylize.
 * `--style_image`: name of style image from which you want to extract style
 * `--output_image`: path for saving the output image.
+ 
+**Note:** Use of gpu is recommended because it will run very fast as compared to cpu and default parameters give decent results on almost all images but if results are not that good than feel free to tweak them according to your needs.
