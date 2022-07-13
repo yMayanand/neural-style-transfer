@@ -14,11 +14,11 @@ parser.add_argument('--style_image', type=str, help='path to style image')
 parser.add_argument('--content_image', type=str, help='path to content image')
 parser.add_argument('--output_image', type=str, help='path to save resulted image')
 
-parser.add_argument('--lr', type=float, default=1e-3, help='learning rate')
-parser.add_argument('--steps', type=int, default=50,
+parser.add_argument('--lr', type=float, default=5e0, help='learning rate')
+parser.add_argument('--steps', type=int, default=1000,
                     help='number of optimization steps')
 parser.add_argument('--log_interval', type=int,
-                    default=10, help='logging interval')
+                    default=500, help='logging interval')
 
 
 parser.add_argument('--style_size', type=int,
@@ -29,9 +29,9 @@ parser.add_argument('--content_size', type=int,
 parser.add_argument('--content_weight', type=float,
                     default=1e5, help='content weight for loss')
 parser.add_argument('--style_weight', type=float,
-                    default=1e10, help='style weight for loss')
+                    default=3e4, help='style weight for loss')
 parser.add_argument('--tv_weight', type=float,
-                    default=1., help='total variation weight for loss')
+                    default=1e0, help='total variation weight for loss')
 
 
 def main(args):
