@@ -38,7 +38,7 @@ This repository contains a pytorch implementation of an algorithm for artistic s
 </p>
 
 ## Requirements
-The program is written in Python, and uses [pytorch](http://pytorch.org/), [scipy](https://www.scipy.org). A GPU is not necessary, but can provide a significant speed up especially for training a new model. Regular sized images can be styled on a laptop or desktop using saved models.
+The program is written in Python, and uses [pytorch](http://pytorch.org/), [numpy](https://numpy.org/), [opencv](https://opencv.org/). A GPU is not necessary, but can provide a significant speed up especially for training a new model. Regular sized images can be styled on a laptop or desktop using saved models.
 
 ## Usage
 Stylize image
