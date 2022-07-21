@@ -32,8 +32,7 @@ This repository contains a pytorch implementation of an algorithm for artistic s
 </p>
 
 <p align="center">
-
-    <img src="data/vg_wheat_field.jpg" width="250px" height="250px">
+     <img src="data/vg_wheat_field.jpg" width="250px" height="250px">
     <img src="data/golden_gate.jpg" width="250px" height="250px">
     <img src="outputs/gate_wheat.jpg" width="440px" height="440px">
 </p>
